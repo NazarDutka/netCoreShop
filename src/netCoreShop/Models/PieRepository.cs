@@ -10,7 +10,7 @@ namespace netCoreShop.Models
     {
         private readonly AppDbContext _appDbContext;
 
-        PieRepository(AppDbContext appDbContext)
+        public PieRepository(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
         }
