@@ -27,8 +27,8 @@ namespace netCoreShop
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(_configurationRoot.GetConnectionString("DefaultConnection")));
-            services.AddTransient<ICategoryRepository, MockCategoryRepository>();
-            services.AddTransient<IPieRepository, MockPieRepository>();
+            services.AddTransient<ICategoryRepository, CategoryRepository>();
+            services.AddTransient<IPieRepository, PieRepository>();
             services.AddMvc();
         }
 
@@ -49,6 +49,7 @@ namespace netCoreShop
             app.UseStaticFiles();
             app.UseMvcWithDefaultRoute();
 
+            DbInitializer.Seed(app);
         }
     }
 }
