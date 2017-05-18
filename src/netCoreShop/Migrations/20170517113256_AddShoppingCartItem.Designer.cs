@@ -8,9 +8,10 @@ using netCoreShop.Models;
 namespace netCoreShop.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170517113256_AddShoppingCartItem")]
+    partial class AddShoppingCartItem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
@@ -62,37 +63,12 @@ namespace netCoreShop.Migrations
                     b.ToTable("Pies");
                 });
 
-            modelBuilder.Entity("netCoreShop.Models.ShoppingCartItem", b =>
-                {
-                    b.Property<int>("ShoppingCartItemId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("Amount");
-
-                    b.Property<int?>("PieId");
-
-                    b.Property<string>("ShoppingCartId");
-
-                    b.HasKey("ShoppingCartItemId");
-
-                    b.HasIndex("PieId");
-
-                    b.ToTable("ShoppingCartItems");
-                });
-
             modelBuilder.Entity("netCoreShop.Models.Pie", b =>
                 {
                     b.HasOne("netCoreShop.Models.Category", "Category")
                         .WithMany("Pies")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("netCoreShop.Models.ShoppingCartItem", b =>
-                {
-                    b.HasOne("netCoreShop.Models.Pie", "Pie")
-                        .WithMany()
-                        .HasForeignKey("PieId");
                 });
         }
     }
