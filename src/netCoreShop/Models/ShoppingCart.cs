@@ -12,11 +12,13 @@ namespace netCoreShop.Models
     public class ShoppingCart
     {
         private readonly AppDbContext _appDbContext;
-        private ShoppingCart(AppDbContext appDbContext)
+        private ShoppingCart(AppDbContext appDbContext)//як тоді тестувати 
         {
             _appDbContext = appDbContext;
         }
-
+        //я б спробував зробити коструктор в який передається userId 
+        //чи варто корзину зберінати в базі даних
+        //цікаво чи DI можна реалізувати життя цього одного інстансу на сесію
         public string ShoppingCartId { get; set; }
 
         public List<ShoppingCartItem> ShoppingCartItems { get; set; }
@@ -34,7 +36,7 @@ namespace netCoreShop.Models
             return new ShoppingCart(context) { ShoppingCartId = cartId };
         }
 
-        public void AddToCart(Pie pie, int amount)
+        public void AddToCart(Pie pie, int amount)//схоже автор курсу профукав amount напевно метод мав бути без  (int amount) або інша реалізація
         {
             var shoppingCartItem =
                     _appDbContext.ShoppingCartItems.SingleOrDefault(
@@ -83,7 +85,7 @@ namespace netCoreShop.Models
 
             return localAmount;
         }
-
+        //читаючи код на цьому місці виникла думка "цьго чувака я б до себе в команду не взяв"
         public List<ShoppingCartItem> GetShoppingCartItems()
         {
             return ShoppingCartItems ??
@@ -92,14 +94,14 @@ namespace netCoreShop.Models
                            .Include(s => s.Pie)
                            .ToList());
         }
-
+        
         public void ClearCart()
         {
             var cartItems = _appDbContext
                 .ShoppingCartItems
                 .Where(cart => cart.ShoppingCartId == ShoppingCartId);
 
-            _appDbContext.ShoppingCartItems.RemoveRange(cartItems);
+            _appDbContext.ShoppingCartItems.RemoveRange(cartItems);//дивно вибрати, а потім видалити. думаю є "легший" спосіб 
 
             _appDbContext.SaveChanges();
         }
