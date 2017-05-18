@@ -29,7 +29,11 @@ namespace netCoreShop
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(_configurationRoot.GetConnectionString("DefaultConnection")));
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<IPieRepository, PieRepository>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<ShoppingCart>(sp=>ShoppingCart.GetCart(sp));
             services.AddMvc();
+
+
             services.AddMemoryCache();
             services.AddSession();
 
@@ -50,9 +54,11 @@ namespace netCoreShop
             app.UseDeveloperExceptionPage();
             app.UseStatusCodePages();
             app.UseStaticFiles();
-            app.UseMvcWithDefaultRoute();
-            app.UseSession();
 
+            app.UseSession();//перед UseMvcWithDefaultRoute()
+            app.UseMvcWithDefaultRoute();
+            
+             
             DbInitializer.Seed(app);
         }
     }

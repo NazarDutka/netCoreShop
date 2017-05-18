@@ -21,7 +21,8 @@
     },
     "Microsoft.EntityFrameworkCore.SqlServer": "1.0.1",
     "Microsoft.AspNetCore.Session": "1.0.0",
-    "Microsoft.Extensions.Caching.Memory" : "1.0.0"
+    "Microsoft.Extensions.Caching.Memory": "1.0.0",
+    "Microsoft.AspNetCore.Http.Extensions": "1.0.0"
 
   },
 
